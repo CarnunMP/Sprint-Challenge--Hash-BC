@@ -30,8 +30,7 @@ def proof_of_work(last_proof):
     random.seed()
 
     while not valid_proof(hash_p, proof):
-        hash_p = hashlib.sha256(str(proof).encode()).hexdigest()
-        proof = int(random.random() * random.randint(1, pow(10, 15)))
+        proof = random.randint(0, (10 * random.randint(1, 17)))
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -48,7 +47,8 @@ def valid_proof(last_hash, proof):
 
     # TODO: Your code here!
     new_hash = hashlib.sha256(str(proof).encode()).hexdigest()
-    return last_hash[:-6] == new_hash[:7]
+    # print(last_hash[-6:], new_hash[:6])
+    return last_hash[-6:] == new_hash[:6]
 
 
 if __name__ == '__main__':
