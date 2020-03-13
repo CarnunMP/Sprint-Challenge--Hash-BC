@@ -25,6 +25,15 @@ def proof_of_work(last_proof):
     print("Searching for next proof")
     proof = 0
     #  TODO: Your code here
+    hash_p = hashlib.sha256(str(last_proof).encode()).hexdigest()
+    hash_p_prime = hashlib.sha256(str(proof).encode()).hexdigest()
+
+    random.seed()
+
+    while hash_p[:-6] != hash_p_prime[:7]:
+        hash_p = hash_p_prime
+        proof = int(random.random() * random.randint(1, pow(10, 15)))
+        hash_p_prime = hashlib.sha256(str(proof).encode()).hexdigest()
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
