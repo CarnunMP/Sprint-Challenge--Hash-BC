@@ -24,11 +24,28 @@ This sprint challenge is divided up into three parts:  Hash tables coding, block
 
 Explain in detail the workings of a dynamic array:
 * What is the runtime complexity to access an array, add or remove from the front, and add or remove from the back?
+
+  Assuming the question is about a _dynamic_ array: accessing is O(1), like a regular array; adding/deleting at from the front is O(n), as the whole of the rest of the array needs be shifted up/down; and adding/removing to the end is O(1) on average, or O(n) when the array needs to be resized to accommodate the new element., as this involves copying the entire array.
+
 * What is the worse case scenario if you try to extend the storage size of a dynamic array?
 
+  I suppose the worst case scenario is there's no memory left to grow into! E.g. if the dynamic array is running on some kind of small, embedded chip.
+
+  But to interpret the question a little differently: The worst case scenario is O(n), as every existing element of the array needs to be copied over into a new, larger array.
+
 Explain how a blockchain is structured. What are the blocks, what is the chain? How is the data organized?
+
+  A blockchain is just that, a 'chain' of 'blocks' where a block is just an object comprising certain data and methods 'chained' to other blocks with hash codes. Specifically, one block is 'chained' to the next when the hash of _its_ hash (an identifying code) together with its 'proof' (a number, usually; also sometimes called a 'nonce') and perhaps an encoding of all of its transactions (objects keeping track of amounts, senders, and recipients) meets some predefined criterion — usually, that it contains some number of leading zeroes.
+
+  In the case of Bitcoin, this criterion is massaged to ensure that a new coin is added to the blockchain (or 'mined') about every 10 minutes. This is done by increasing or decreasing the number of leading zeroes required.
+
+  So, a block contains transactions, a 'proof', and the hash of the previous block as well as an index and a timestamp. At least.
  
 Explain how proof of work functions. How does it operate. How does this protect the chain from attack. What kind of attack is possible?
+
+  A proof of work is just an arbitrarily difficult (i.e. resource-intensive) computational task. It ensures that mining blocks is rare, and that — because a block's hash depends on the hash of the previous block, and its on the block before it, and so on — blocks inside the chain cannot be tampered with without the need to re-meet the proof-of-work of _all_ of the blocks which come after them: an almost impossible computational task, ever more impossible the farther back in the chain tampering is attempted.
+
+  One possible attack is to pool together vast computational resources — perhaps with malware that infects people's computers — and try to re-write block history. But it's probably more efficient, if one has accesss to vast computational resources, to simply mine _new_ blocks.
 
 ## Project Set Up
 
